@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<head>
+    <title>Order Items</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <div class="leftHolder">
+        <form onsubmit="return handleData()" method="post" action="https://postman-echo.com/post"></form>           
+        <div class="itemType">
+            <p class="itemText"><b>Pizza</b></p>
+        </div>
+        <div class="item1">
+            <p class="itemPrice">€7.50</p>
+            <p class="itemText">Margherita</p>
+            <button id = "itemButton" class="itemButton">Add</button>
+        </div>
+    
+        <div class="item2">
+            <p class="itemPrice">€13.50</p>
+            <p class="itemText">Meat</p>            
+            <button class="itemButton">Add</button>
+        </div>
+    
+        <div class="item3">
+            <p class="itemPrice">€13.0</p>
+            <p class="itemText">Capricciosa</p>
+            <button class="itemButton">Add</button>
+        </div>
+    
+        <div class="item4">
+            <p class="itemPrice">€9.50</p>
+            <p class="itemText">Vegetarian</p>
+            <button class="itemButton">Add</button>
+        </div>
+    
+        <div class="item5">
+            <p class="itemPrice">€10.50</p>
+            <p class="itemText">Pepperoni</p>
+            <button class="itemButton">Add</button>
+        </div>
+    
+        <div class="item6">
+            <p class="itemPrice">€9.00</p>
+            <p class="itemText">Napoletana</p>
+            <button class="itemButton">Add</button>
+        </div>
+
+        <div class="item7">
+            <p class="itemPrice">€8.00</p>
+            <p class="itemText">Caprese</p>
+            <button class="itemButton">Add</button>
+        </div>
+
+        <div class="item8">
+            <p class="itemPrice">€10.50</p>
+            <p class="itemText">Prosciutto funghi</p>
+            <button class="itemButton">Add</button>
+        </div>
+    
+        <div class="itemType2">
+            <p class="itemText"><b>Drinks</b></p>
+        </div>
+    
+        <div class="item9">
+            <p class="itemPrice">€2.50</p>
+            <p class="itemText">Water</p>
+            <button class="itemButton">Add</button>
+        </div>
+    
+        <div class="item10">
+            <p class="itemPrice">€3.00</p>
+            <p class="itemText">Coca-Cola</p>
+            <button class="itemButton">Add</button>
+        </div>
+    
+        <div class="item11">
+            <p class="itemPrice">€3.00</p>
+            <p class="itemText">Coca cola zero</p>
+            <button class="itemButton">Add</button>
+        </div>
+    
+        <div class="item12">
+            <p class="itemPrice">€3.00</p>
+            <p class="itemText">Lipten ice tea</p>
+            <button class="itemButton">Add</button>
+        </div>
+
+        <div class="item13">
+            <p class="itemPrice">€3.00</p>
+            <p class="itemText">Fanta</p>
+            <button class="itemButton">Add</button>
+        </div>
+
+        <div class="item14">
+            <p class="itemPrice">€3.00</p>
+            <p class="itemText">Cassis</p>
+            <button class="itemButton">Add</button>
+        </div>
+
+        <div class="item15">
+            <p class="itemPrice">€3.00</p>
+            <p class="itemText">Sprite</p>
+            <button class="itemButton">Add</button>
+        </div>
+
+     </div>
+        <div class="itemType3">
+            <p class="itemText"><b>Desserts</b></p>
+        </div>
+    
+        <div class="item16">
+            <p class="itemPrice">€5.50</p>
+            <p class="itemText">Churros</p>
+            <button class="itemButton">Add</button>
+        </div>
+    
+        <div class="item17">
+            <p class="itemPrice">€4.00</p>
+            <p class="itemText">Mousse</p>
+            <button class="itemButton">Add</button>
+        </div>
+
+        <div class="item18">
+            <p class="itemPrice">€3.00</p>
+            <p class="itemText">Ice cream</p>
+            <button class="itemButton">Add</button>
+        </div>
+
+        <div class="item19">
+            <p class="itemPrice">€5.00</p>
+            <p class="itemText">Cheesecake</p>
+            <button class="itemButton">Add</button>
+        </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Find all buttons by class name
+            var pizzaButtons = document.querySelectorAll(".itemButton");
+            var orderList = document.getElementById("orderList");
+        
+            // Add a click event
+            pizzaButtons.forEach(function(button) {
+                button.addEventListener("click", function() {
+                    // Get the pizza name from the previous element
+                    var pizzaName = button.previousElementSibling.textContent;
+        
+                    // Create a new list to display the selected pizza
+                    var listItem = document.createElement("li");
+                    listItem.textContent = pizzaName;
+        
+                    // Add the new item to the order list
+                    orderList.appendChild(listItem);
+                });
+            });
+        });
+
+
+        function sendOrderToServer(orderList) {
+    fetch('/receive_order', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orderList: orderList }),
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data); // This will log the response from the server
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+function sendOrderToServer(orderList) {
+    fetch('/receive_order', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ orderList: orderList }),
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data); // This will log the response from the server
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function submitOrder() {
+    var orderListItems = document.querySelectorAll("#orderList li");
+    var orderList = [];
+
+    orderListItems.forEach(function(item) {
+        orderList.push(item.textContent);
+    });
+
+    sendOrderToServer(orderList);
+    window.location.reload()
+}
+
+        </script>
+
+
+<div class="rightHolder">
+    <div class="itemTypeOrder">
+        <p class="itemText"><b>Items</b></p>
+    </div>
+
+    <div class="orderBody">
+        <br>
+        <h2>Order Items</h2>
+        <ul id="orderList"></ul>
+        <button class="orderButton" onclick="submitOrder()">Order</button>
+    </div>
+</div>
+
+</body>
+</html>
